@@ -31,9 +31,15 @@ public class EmployeeService {
 		return new EmployeeDepartmentDTO(result.get());
 	}
 	
+//	@Transactional(readOnly = true)
+//	public List<EmployeeDepartmentDTO> findEmployeesWithDepartments() {
+//		List<Employee> result = repository.findEmployeesWithDepartments();
+//		return result.stream().map(x -> new EmployeeDepartmentDTO(x)).collect(Collectors.toList());
+//	}
+
 	@Transactional(readOnly = true)
-	public List<EmployeeDepartmentDTO> findEmployeesWithDepartments() {
-		List<Employee> result = repository.findEmployeesWithDepartments();
-		return result.stream().map(x -> new EmployeeDepartmentDTO(x)).collect(Collectors.toList());
-	}	
+	public List<EmployeeMinDTO> findByName(String name) {
+		List<Employee> result = repository.findByNameContainingIgnoreCase(name);
+		return result.stream().map(x -> new EmployeeMinDTO(x)).toList();
+	}
 }
